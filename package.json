@@ -1,0 +1,17 @@
+{
+  "name": "BinanceOCO",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "binance": "^1.3.3",
+    "electron": "^4.1.0",
+    "jquery": "^3.3.1"
+  }
+}

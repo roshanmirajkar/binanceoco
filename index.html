@@ -1,0 +1,94 @@
+<html>
+<head>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+  <script src="index.js"></script>
+
+
+  </head>
+  <body>
+    <div class="container">
+      <br>
+      <h1>Binance OCO form</h1>
+      <br>
+      <br>
+      <div class="card-body">
+      <div class="row">
+        <div class="col-sm-10">
+          <table class ="table table-borderless">
+          <tbody>
+            <tr><td ><h6>Binance API Key: </h6></td><td> <input type="password" id="binancekeyapi"></td><tr>
+              <tr><td ><h6>Binance Secret Key: </h6></td><td> <input type="password" id="binancekeyapi"></td><tr>
+                <tr><td ><h6>Symbol: </h6></td><td> <select class="col-sm-4" id="Symbol"></select></td><tr>
+                  <tr><td ><h6>Quantity: </h6></td><td> <input class="col-sm-3" id="quantity"></td><tr>
+                    <tr><td ><h6>Profit Price: </h6></td><td> <input class="col-sm-3" id="profitloss"></td><tr>
+                      <tr><td ><h6>Stop Loss Price: </h6></td><td> <input class="col-sm-3" id="stoploss"></td><tr>
+                        <tr><td ><h6>Preference: </h6></td><td> <select class="col-sm-4" id="Preference"><option value = 1> Take Profit</option><option value = 2>Stop Loss</option> </select></td><tr>
+                          <tr><td ><h6>Toggle: </h6></td><td> <input id="botswitch" data-onstyle="success" data-offstyle"warning" data-size="small" type="checkbox" data-toggle="toggle"</td><tr>
+
+                            </tbody>
+                            </table>
+                            </div>                            </div>
+                          </div>
+                          <br>
+                          <br>
+                          <div class= "container">
+                            <button onclick="saveSetting()" type="button" class ="btn btn-danger">SaveForm</button>
+                            <button onclick="loadSetting()" type="button" class ="btn btn-success">Load Form</button>
+
+
+        </div>
+      </div>
+  </body>
+<script>
+  loadSymbol();
+
+
+  function loadSymbol(){
+    request('GET','https://api.binance.com/api/v3/ticker/price').then((r1) => {
+
+        //console.log(r1.target.responseText);
+
+        var lv_markup ="";
+        var lv_r1Resp = JSON.parse(r1.target.responseText);
+        for(i=0; i < lv_r1Resp.length; i++){
+
+
+          lv_markup += "<option value=" + lv_r1Resp[i]["symbol"] + ">" + lv_r1Resp[i]["symbol"] + "</option>"
+          console.log(lv_markup);
+        }
+          $('select[id ="Symbol"]').append(lv_markup);
+
+          console.log(lv_markup);
+
+    }).catch((err) => {
+        console.log(err);
+
+
+    });
+
+  }
+
+  function request(method,url) {
+    return new Promise(function(resolve,reject){
+      var xhr = new XMLHttpRequest();
+      xhr.open(method,url);
+      xhr.onload = resolve;
+      xhr.onerror = reject;
+      xhr.send();
+
+
+    });
+  }
+
+
+
+
+  </script>
+  </html>
